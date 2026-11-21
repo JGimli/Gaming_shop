@@ -46,6 +46,19 @@ nav {
 	background: #1b1b1b;
 }
 
+.nav-actions {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+}
+
+.cart-link {
+	white-space: nowrap;
+	padding: 0.7rem 0.85rem;
+	border: 1px solid #e32636;
+	border-radius: 4px;
+}
+
 .search-container {
 	position: relative;
 	width: min(100%, 22rem);
@@ -235,6 +248,145 @@ a:focus-visible {
 	font-weight: 700;
 }
 
+.add-to-cart,
+.cart-primary-button,
+.cart-clear,
+.cart-quantity button,
+.cart-line-total button {
+	border: 1px solid #e32636;
+	border-radius: 4px;
+	background: #1b1b1b;
+	color: #f5f5f5;
+	cursor: pointer;
+	font: inherit;
+}
+
+.add-to-cart {
+	width: calc(100% - 1rem);
+	margin: 0.75rem 0.5rem 0.25rem;
+	padding: 0.65rem;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+}
+
+.add-to-cart:hover,
+.add-to-cart:focus-visible,
+.cart-primary-button:hover,
+.cart-primary-button:focus-visible,
+.cart-clear:hover,
+.cart-clear:focus-visible,
+.cart-quantity button:hover,
+.cart-quantity button:focus-visible,
+.cart-line-total button:hover,
+.cart-line-total button:focus-visible {
+	background: #e32636;
+	color:#fff;
+	outline: none;
+}
+
+.cart-heading,
+.cart-summary {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1rem;
+}
+
+.cart-heading h1 {
+	margin: 0;
+}
+
+.cart-clear {
+	padding: 0.55rem 0.75rem;
+}
+
+.cart-empty {
+	padding: 3rem 1rem;
+	text-align: center;
+}
+
+.cart-list {
+	margin: 1.5rem 0;
+	padding: 0;
+	list-style: none;
+}
+
+.cart-item {
+	display: grid;
+	grid-template-columns: 9rem minmax(12rem, 1fr) auto auto;
+	align-items: center;
+	gap: 1.25rem;
+	margin-bottom: 1rem;
+	padding: 1rem;
+	border: 1px solid #e32636;
+	background: #1b1b1b;
+}
+
+.cart-item-image img {
+	display: block;
+	width: 9rem;
+	height: 5.5rem;
+	object-fit: cover;
+}
+
+.cart-item-details h2,
+.cart-item-details p {
+	margin: 0;
+}
+
+.cart-item-details p {
+	margin-top: 0.5rem;
+	font-weight: 700;
+}
+
+.cart-quantity {
+	display: grid;
+	grid-template-columns: 2.25rem 2.25rem 2.25rem;
+	align-items: center;
+	text-align: center;
+}
+
+.cart-quantity button {
+	height: 2.25rem;
+	font-size: 1.25rem;
+}
+
+.cart-line-total {
+	display: grid;
+	justify-items: end;
+	gap: 0.5rem;
+}
+
+.cart-line-total button {
+	padding: 0.35rem 0.5rem;
+}
+
+.cart-summary {
+	margin-top: 1.5rem;
+	padding-top: 1.5rem;
+	border-top: 1px solid #555;
+}
+
+.cart-summary p {
+	margin: 0;
+}
+
+.cart-total {
+	margin-left: auto !important;
+	font-size: 1.25rem;
+}
+
+.cart-primary-button {
+	display: inline-block;
+	padding: 0.75rem 1rem;
+	text-align: center;
+}
+
+.cart-primary-button:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
 footer {
 	padding: 1rem 2rem;
 	border-top: 1px solid #e32636;
@@ -261,7 +413,46 @@ footer p {
 		justify-content: space-between;
 	}
 
+	.nav-actions {
+		width: 100%;
+	}
+
+	.nav-actions .search-container {
+		flex: 1;
+	}
+
 	.game-details {
 		grid-template-columns: 1fr;
+	}
+
+	.cart-heading,
+	.cart-summary {
+		align-items: stretch;
+	}
+
+	.cart-item {
+		grid-template-columns: 5.5rem 1fr;
+	}
+
+	.cart-item-image img {
+		width: 5.5rem;
+		height: 4.5rem;
+	}
+
+	.cart-quantity,
+	.cart-line-total {
+		justify-self: start;
+	}
+
+	.cart-summary {
+		flex-wrap: wrap;
+	}
+
+	.cart-total {
+		margin-left: 0 !important;
+	}
+
+	.cart-primary-button {
+		width: 100%;
 	}
 }

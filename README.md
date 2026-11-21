@@ -2,7 +2,7 @@
 
 Gaming Shop is a full-stack game catalog application built with React, Vite, Express, and PostgreSQL.
 
-The React frontend displays games in a responsive catalog, provides pagination, and includes live title search. Selecting a game opens a detail page with its image, title, price, and description. The Express API retrieves catalog data from PostgreSQL.
+The React frontend displays games in a responsive catalog, provides pagination, live title search, game details, and a persistent shopping cart. The Express API retrieves catalog data from PostgreSQL.
 
 
 ## Features
@@ -12,6 +12,11 @@ The React frontend displays games in a responsive catalog, provides pagination, 
 - Debounced live search
 - Search result dropdown
 - Game detail view
+- Shopping cart with quantity controls
+- Cart item count in the navigation
+- Cart data persisted in browser local storage
+- Empty-cart and clear-cart states
+- Calculated item totals and cart total
 - Express API with CORS restricted to the local frontend
 - PostgreSQL-backed game data
 
@@ -42,6 +47,8 @@ Gaming_shop/
 │   └── src/
 │       ├── assets/
 │       ├── App.jsx
+│       ├── CartContext.jsx
+│       ├── CartPage.jsx
 │       ├── Core.jsx
 │       ├── Head.jsx
 │       ├── Foot.jsx
@@ -164,7 +171,25 @@ http://localhost:3000/search?title=zelda
 | --- | --- |
 | `/` | Game catalog |
 | `/game?title=<title>` | Selected game details |
+| `/cart` | Shopping cart |
 | `/foot` | Footer component demo route |
+
+## Shopping Cart
+
+The cart is managed by `CartContext.jsx` and shared across the application through React Context.
+
+Users can:
+
+- Add a game from the catalog
+- Add a game from its detail page
+- Increase or decrease an item quantity
+- Remove an individual item
+- Clear the complete cart
+- View the item count and total price
+
+Cart entries are stored in browser `localStorage` under the key `gaming-shop-cart`. Reloading the page restores the saved cart.
+
+The checkout button is currently a placeholder and does not process a payment.
 
 ## Scripts
 
@@ -195,3 +220,4 @@ The backend package currently does not define a dedicated start script or a test
 - **Frontend cannot reach the API:** Confirm the backend is running on port `3000`.
 - **PostgreSQL connection error:** Check `.env`, database credentials, and whether PostgreSQL is running.
 - **No games appear:** Confirm the `gamestore` database contains the `games` table and has rows.
+- **Cart items disappear:** Check whether browser local storage is enabled or whether the browser data has been cleared.

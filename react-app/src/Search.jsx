@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
+import { useCart } from './CartContext.jsx';
 
 const API_URL = 'http://localhost:3000';
 
@@ -101,6 +102,7 @@ export function Search() {
 }
 
 export function GamePage() {
+    const { addItem } = useCart();
     const [searchParams] = useSearchParams();
     const location = useLocation();
     const title = searchParams.get('title') ?? '';
@@ -168,6 +170,13 @@ export function GamePage() {
                 <h1>{game.title}</h1>
                 {game.price != null && <p className="game-price">{game.price}</p>}
                 {game.description && <p>{game.description}</p>}
+                <button
+                    className="add-to-cart"
+                    type="button"
+                    onClick={() => addItem(game)}
+                >
+                    Add to cart
+                </button>
             </section>
         </main>
     );

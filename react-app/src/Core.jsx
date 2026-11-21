@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useCart } from './CartContext.jsx';
 
 const GAMES_PER_PAGE = 4;
 const MAX_PAGES = 5;
@@ -8,6 +9,7 @@ const MAX_PAGES = 5;
 function Core(){
     const [items, setItems] = useState([]);
     const [page, setPage] = useState(1);
+    const { addItem } = useCart();
 
     const fetchData = async()=>{
         const response = await axios.get("http://localhost:3000");
@@ -41,6 +43,13 @@ function Core(){
                     </Link>
                     <h2>{game.title}</h2>
                     <p>{game.price}</p>
+                    <button
+                        className="add-to-cart"
+                        type="button"
+                        onClick={() => addItem(game)}
+                    >
+                        Add to cart
+                    </button>
                 </li>
             ))    
             }

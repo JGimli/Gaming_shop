@@ -48,6 +48,7 @@ const getSearchedGames = async(gameTitle)=>{
     }
 }
 
+
 module.exports ={
     getAllGames,
     getSearchedGames
