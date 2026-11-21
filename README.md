@@ -4,7 +4,6 @@ Gaming Shop is a full-stack game catalog application built with React, Vite, Exp
 
 The React frontend displays games in a responsive catalog, provides pagination, and includes live title search. Selecting a game opens a detail page with its image, title, price, and description. The Express API retrieves catalog data from PostgreSQL.
 
-![Gaming Shop hero](react-app/src/assets/hero.png)
 
 ## Features
 
