@@ -9,7 +9,11 @@ This directory contains the React and Vite frontend for Gaming Shop.
 - Game detail pages
 - Shopping cart
 - Persistent cart data using browser local storage
+- Login and registration screens at `/login` and `/register`
 - Responsive dark-themed interface
+
+The login and registration screens are presentation-only; authentication is not
+implemented.
 
 ## Run
 

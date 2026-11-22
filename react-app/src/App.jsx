@@ -1,4 +1,4 @@
-import { BrowserRouter,Route,Routes,Link } from 'react-router-dom'
+import { BrowserRouter,Route,Routes,Link,useLocation } from 'react-router-dom'
 import React from 'react'
 import './App.css'
 import Head from './Head.jsx'
@@ -7,27 +7,34 @@ import Core from './Core.jsx'
 import { GamePage, Search } from './Search.jsx'
 import { CartProvider, useCart } from './CartContext.jsx'
 import CartPage from './CartPage.jsx'
+import Login from './LoginPage.jsx'
+import Register from './RegisterPage.jsx'
 
 function AppContent(){
   const { itemCount } = useCart()
+  const { pathname } = useLocation();
 
   return (
     <>
       <Head/>
-      <nav>
-        <Link to="/">Home</Link>
-        <div className="nav-actions">
-          <Search/>
-          <Link className="cart-link" to="/cart" aria-label={`Shopping cart with ${itemCount} items`}>
+      {pathname !== '/login' && pathname !== '/register' && (
+        <nav>
+          <Link to="/">Home</Link>
+          <div className="nav-actions">
+            <Search/>
+            <Link className="cart-link" to="/cart" aria-label={`Shopping cart`}>
               Cart {itemCount == 0 ? "":itemCount}
-          </Link>
-        </div>
-      </nav>
+            </Link>
+          </div>
+        </nav>
+      )}
       <Routes>
         <Route path="/" element={<Core/>} />
         <Route path="/game" element={<GamePage/>} />
         <Route path="/cart" element={<CartPage/>} />
         <Route path="/foot" element={<Foot/>} />
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/register" element={<Register/>}/>
       </Routes>
       <Foot/>
     </>
