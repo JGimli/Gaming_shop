@@ -9,6 +9,7 @@ import { CartProvider, useCart } from './CartContext.jsx'
 import CartPage from './CartPage.jsx'
 import Login from './LoginPage.jsx'
 import Register from './RegisterPage.jsx'
+import { AuthProvider } from './AuthContext.jsx'
 
 function AppContent(){
   const { itemCount } = useCart()
@@ -45,9 +46,11 @@ function AppContent(){
 function App(){
   return (
     <BrowserRouter>
-      <CartProvider>
-        <AppContent/>
-      </CartProvider>
+      <AuthProvider>
+        <CartProvider>
+          <AppContent/>
+        </CartProvider>
+      </AuthProvider>
     </BrowserRouter>
   )
 }

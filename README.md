@@ -3,6 +3,7 @@
 Gaming Shop is a full-stack game catalog application built with React, Vite, Express, and PostgreSQL.
 
 The React frontend displays games in a responsive catalog, provides pagination, live title search, game details, and a persistent shopping cart. The Express API retrieves catalog data from PostgreSQL.
+Users can register and log in through the API. Passwords are hashed with Node.js `scrypt`; the frontend keeps the returned public user details in browser `sessionStorage` until logout or the tab's session ends.
 
 
 ## Features
@@ -15,6 +16,8 @@ The React frontend displays games in a responsive catalog, provides pagination, 
 - Shopping cart with quantity controls
 - Cart item count in the navigation
 - Cart data persisted in browser local storage
+- User registration and login
+- User session retained for the browser tab session, with a header logout action
 - Empty-cart and clear-cart states
 - Calculated item totals and cart total
 - Express API with CORS restricted to the local frontend
@@ -47,11 +50,14 @@ Gaming_shop/
 │   └── src/
 │       ├── assets/
 │       ├── App.jsx
+│       ├── AuthContext.jsx
 │       ├── CartContext.jsx
 │       ├── CartPage.jsx
 │       ├── Core.jsx
 │       ├── Head.jsx
 │       ├── Foot.jsx
+│       ├── LoginPage.jsx
+│       ├── RegisterPage.jsx
 │       ├── Search.jsx
 │       ├── App.css
 │       └── index.css
@@ -59,6 +65,8 @@ Gaming_shop/
     └── backend/
         ├── index.js
         ├── games.js
+        ├── register.js
+        ├── users.js
         ├── package.json
         └── .env
 ```
@@ -86,7 +94,18 @@ CREATE TABLE games (
     imagePath TEXT,
     description TEXT
 );
+
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(100) NOT NULL CHECK (char_length(username) >= 3),
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password_hash VARCHAR(100) NOT NULL
+);
 ```
+
+The registration endpoint normalizes email addresses to lowercase and stores a
+`scrypt` password hash in `password_hash`; clients should send the password
+itself to the API, not a precomputed hash.
 
 Insert at least one game to verify the setup:
 
@@ -112,7 +131,10 @@ PG_PASSWORD=your_password
 PG_PORT=5432
 ```
 
-The backend uses these values with a PostgreSQL connection pool. If a variable is omitted, `games.js` falls back to the values shown above in configuration.
+The backend uses these values with PostgreSQL connection pools. If a variable
+is omitted, the current defaults are `postgres`, `localhost`, `gamestore`,
+`123`, and `5432`, respectively. Set a strong local `PG_PASSWORD` rather than
+relying on the development fallback.
 
 > Do not commit real database passwords. Use environment variables or a local `.env` file excluded from version control.
 
@@ -158,6 +180,22 @@ Open `http://localhost:5173` in a browser.
 | --- | --- | --- |
 | `GET` | `/` | Returns all games |
 | `GET` | `/search?title=<term>` | Returns games whose title contains the search term, case-insensitively |
+| `POST` | `/register` | Creates an account and returns its username and email |
+| `POST` | `/login` | Verifies credentials and returns the user's username and email |
+
+Registration and login accept JSON:
+
+```json
+{
+  "username": "player1",
+  "email": "player@example.com",
+  "password": "your-password"
+}
+```
+
+For login, send only `email` and `password`. Registration returns `201`,
+successful login returns `200`, invalid input returns `400`, incorrect login
+credentials return `401`, and an already-registered email returns `409`.
 
 Example:
 
@@ -172,7 +210,20 @@ http://localhost:3000/search?title=zelda
 | `/` | Game catalog |
 | `/game?title=<title>` | Selected game details |
 | `/cart` | Shopping cart |
+| `/login` | Login form |
+| `/register` | Registration form |
 | `/foot` | Footer component demo route |
+
+## Authentication
+
+The login and registration forms send credentials to the backend and navigate
+home after success. The backend hashes passwords using `scrypt` and returns
+only the user's username and email. The frontend stores that public profile
+under `gaming-shop-user` in browser `sessionStorage`; the header changes to a
+logout action while a user is present. Logging out removes the stored profile.
+
+This is client-side session state, not a server-issued session or access token.
+The password-reset link is present, but password reset is not implemented.
 
 ## Shopping Cart
 

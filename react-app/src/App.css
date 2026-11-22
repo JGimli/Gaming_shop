@@ -10,6 +10,22 @@
 	float: right;
 }
 
+.LoginScreen {
+	padding: 0;
+	border: 0;
+	background: transparent;
+	color: #f5f5f5;
+	font: inherit;
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	cursor: pointer;
+}
+
+.LoginScreen:hover,
+.LoginScreen:focus-visible {
+	color: #e32636;
+}
+
 :root {
 	color-scheme: dark;
 	font-family: Arial, Helvetica, sans-serif;
@@ -452,33 +468,46 @@ footer p {
 }
 
 .auth-submit,
-.auth-link-button {
+.auth-link {
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
-	padding: 0.75rem 1rem;
+	padding: 0.5rem 0.75rem;
 	border: 1px solid #e32636;
 	border-radius: 0;
 	background: #1b1b1b;
 	color: #f5f5f5;
 	font: inherit;
+	font-size: 0.875rem;
 	text-align: center;
 	text-decoration: none;
 	cursor: pointer;
 }
 
 .auth-submit {
+	align-self: flex-start;
+	min-width: 7rem;
 	margin-top: 0.5rem;
 	background: #e32636;
 }
 
 .auth-submit:hover,
 .auth-submit:focus-visible,
-.auth-link-button:hover,
-.auth-link-button:focus-visible {
+.auth-link:hover,
+.auth-link:focus-visible {
 	background: #e32636;
 	color: #fff;
 	outline: none;
+}
+
+.auth-submit:disabled {
+	opacity: 0.65;
+	cursor: wait;
+}
+
+.auth-error {
+	margin: 0;
+	color: #ff8080;
 }
 
 .auth-links {
