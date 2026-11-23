@@ -20,7 +20,6 @@ function AppContent(){
       <Head/>
       {pathname !== '/login' && pathname !== '/register' && (
         <nav>
-          <Link to="/">Home</Link>
           <div className="nav-actions">
             <Search/>
             <Link className="cart-link" to="/cart" aria-label={`Shopping cart`}>

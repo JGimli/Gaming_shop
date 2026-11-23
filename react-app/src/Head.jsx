@@ -21,13 +21,19 @@ function Head(){
             </Link></div>
             <div className="LoginR">
             {user ? (
-                <button className="LoginScreen" type="button" onClick={handleLogout}>
-                    Logout
-                </button>
+                <>
+                    <h2>{user.username}</h2>
+                    <button className="LoginScreen" type="button" onClick={handleLogout}>
+                        Logout
+                    </button>
+                </>
             ) : (
+                <>
+                <h2>Guest</h2>
                 <Link className="LoginScreen" to="/login">
                     Log in
                 </Link>
+                </>
             )}
             </div>
         </div>

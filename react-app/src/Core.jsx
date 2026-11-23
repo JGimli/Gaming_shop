@@ -14,7 +14,7 @@ function Core(){
     const fetchData = async()=>{
         const response = await axios.get("http://localhost:3000");
         setItems(response.data);
-        console.log(response.data);
+        //console.log(response.data);
     }
 
     useEffect(()=>{
